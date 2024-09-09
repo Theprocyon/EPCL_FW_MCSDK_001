@@ -1,0 +1,34 @@
+### Eclipse ###
+.metadata
+Debug/
+Release/
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+
+# Prerequisites
+*.d
+
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Linker output
+*.ilk
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+*.map
+*.exp
