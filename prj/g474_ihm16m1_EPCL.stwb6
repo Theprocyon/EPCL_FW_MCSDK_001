@@ -1149,8 +1149,7 @@
             "acceleration": 500,
             "max_speed_startup": 582
           }
-        },
-        "status": "success"
+        }
       }
     ],
     "connections": [
@@ -2605,5 +2604,38 @@
   },
   "version": 13,
   "workBenchVersion": "6.3.0",
-  "workBenchVersionFileCreation": "6.3.0"
+  "workBenchVersionFileCreation": "6.3.0",
+  "details": {
+    "steps": {
+      "stageConfig_0": {
+        "potentiometer": {
+          "enable": true,
+          "samplingTime": "Number.NaN"
+        },
+        "esc": {
+          "enabled": false
+        }
+      },
+      "applicationConfig": {
+        "freeRTOS": {
+          "enabled": false
+        },
+        "dacDebug": {
+          "enabled": true,
+          "dacSignals": {
+            "_tag": "dac",
+            "signal_1": {
+              "enabled": true
+            },
+            "signal_2": {
+              "enabled": true
+            }
+          }
+        },
+        "lowMemoryFootprintReg": false,
+        "motorProfiler": false,
+        "dbgMcuLoadMeasure": false
+      }
+    }
+  }
 }

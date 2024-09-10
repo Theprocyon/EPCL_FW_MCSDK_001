@@ -118,7 +118,7 @@ typedef struct
 #define FLAG_MCP_OVER_UARTA        (1U << 1U)
 #define FLAG_MCP_OVER_UARTB        0U
 
-#define configurationFlag1_M1     (VBUS_SENSING_FLAG|TEMP_SENSING_FLAG)
+#define configurationFlag1_M1     (VBUS_SENSING_FLAG|TEMP_SENSING_FLAG|DAC_CH1_FLAG|DAC_CH2_FLAG)
 #define configurationFlag2_M1     (0U)
 
 #define DRIVE_TYPE_M1              0

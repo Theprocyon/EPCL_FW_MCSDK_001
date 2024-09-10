@@ -16,8 +16,13 @@
         <define key="CTLBOARD_NAME" value="NUCLEO-G474RE" />
         <define key="CURR_SAMPLING_TIME" value="6" />
         <define key="CURRENT_READING_TOPOLOGY" value="THREE_SHUNT_INDEPENDENT_RESOURCES" />
+        <define key="DAC_NAME" value="DAC1" />
         <define key="DBG_MCU_LOAD_MEASURE" value="FALSE" />
-        <define key="DEBUG_DAC_FUNCTIONALITY_EN" value="DISABLE" />
+        <define key="DEBUG_DAC_CH1" value="TRUE" />
+        <define key="DEBUG_DAC_CH1_EN" value="TRUE" />
+        <define key="DEBUG_DAC_CH2" value="TRUE" />
+        <define key="DEBUG_DAC_CH2_EN" value="TRUE" />
+        <define key="DEBUG_DAC_FUNCTIONALITY_EN" value="ENABLE" />
         <define key="DMA_FULL_REQS" value="[{'_tag':'all','dma_request':'USART2_RX','channel':'DMA1_Channel1','mem_inc':'ENABLE','alignment':'BYTE','mode':'NORMAL','priority':'LOW','direction':'DMA_PERIPH_TO_MEMORY','irq_priority':3,'needToSet_irq':true,'irq_name_full':'DMA1_Channel1_IRQn','irq_name':'DMA1_Channel1'},{'_tag':'all','dma_request':'USART2_TX','channel':'DMA1_Channel2','mem_inc':'ENABLE','alignment':'BYTE','mode':'NORMAL','priority':'LOW','direction':'DMA_MEMORY_TO_PERIPH','irq_priority':3,'needToSet_irq':false,'irq_name_full':'','irq_name':''}]" />
         <define key="DP_EMERGENCY_STOP_GPIO_PIN" value="GPIO_Pin_12" />
         <define key="DP_EMERGENCY_STOP_GPIO_PORT" value="GPIOB" />
@@ -37,6 +42,7 @@
         <define key="HW_DEAD_TIME_NS" value="550" />
         <define key="HWV_CS" value="ThreeShunt_AmplifiedCurrents" />
         <define key="HWV_DP" value="SingleErrorTrigger_FixedReference" />
+        <define key="HWV_POTENTIOMETER" value="Potentiometer" />
         <define key="HWV_PWM" value="DrivingHighSidesAndThreeEnables" />
         <define key="LOW_MEMORY_FOOTPRINT_REG" value="FALSE" />
         <define key="LOW_SIDE_IDLE_STATE" value="TURN_OFF" />
@@ -151,7 +157,7 @@
         <define key="M1_PLL_KP_GAIN" value="195" />
         <define key="M1_POLE_PAIR_NUM" value="7" />
         <define key="M1_POSITION_CTRL_ENABLING" value="DISABLE" />
-        <define key="M1_POTENTIOMETER_ENABLE" value="FALSE" />
+        <define key="M1_POTENTIOMETER_ENABLE" value="TRUE" />
         <define key="M1_POWERBOARD_NAME" value="X-NUCLEO-IHM16M1" />
         <define key="M1_PWM_CHARGE_BOOT_CAP_DUTY_CYCLES" value="0.000" />
         <define key="M1_PWM_CHARGE_BOOT_CAP_MS" value="10" />
@@ -267,7 +273,12 @@
         <define key="PHASE_WL_GPIO_PIN" value="GPIO_Pin_15" />
         <define key="PHASE_WL_GPIO_PORT" value="GPIOB" />
         <define key="PHASE_WL_POLARITY" value="L_ACTIVE_HIGH" />
-        <define key="POTENTIOMETER_READING" value="FALSE" />
+        <define key="POTENTIOMETER_ADC" value="ADC1" />
+        <define key="POTENTIOMETER_ADC_SAMPLING_TIME" value="47" />
+        <define key="POTENTIOMETER_CHANNEL" value="ADC_Channel_8" />
+        <define key="POTENTIOMETER_GPIO_PIN" value="GPIO_Pin_2" />
+        <define key="POTENTIOMETER_GPIO_PORT" value="GPIOC" />
+        <define key="POTENTIOMETER_READING" value="TRUE" />
         <define key="PWM_FREQUENCY" value="30000" />
         <define key="PWM_TIMER_SELECTION" value="PWM_TIM1" />
         <define key="R_BRAKE_SWITCH_OFF_THRES_V" value="14" />
@@ -312,6 +323,8 @@
         <define key="VBUS_GPIO_PIN" value="GPIO_Pin_0" />
         <define key="VBUS_GPIO_PORT" value="GPIOA" />
         <define key="WB_UI_CUTOFF_FREQUENCY" value="6000" />
+        <define key="WB_UI_DAC_CH1_PIN" value="PA4" />
+        <define key="WB_UI_DAC_CH2_PIN" value="PA5" />
         <define key="WB_UI_DP_DISABLING_ENABLE" value="FALSE" />
         <define key="WB_UI_ENCODER_HAS_INDEX_PIN" value="FALSE" />
         <define key="WB_UI_FLUX_TARGET" value="0" />

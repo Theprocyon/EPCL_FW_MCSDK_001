@@ -33,6 +33,7 @@
 #include "mc_tasks.h"
 #include "parameters_conversion.h"
 #include "mcp_config.h"
+#include "dac_ui.h"
 #include "mc_app_hooks.h"
 
 /* USER CODE BEGIN Includes */

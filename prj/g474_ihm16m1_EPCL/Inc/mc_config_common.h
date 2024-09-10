@@ -30,6 +30,7 @@
 #include "regular_conversion_manager.h"
 #include "r_divider_bus_voltage_sensor.h"
 #include "virtual_bus_voltage_sensor.h"
+#include "speed_potentiometer.h"
 
 extern RegConv_t TempRegConv_M1;
 extern NTC_Handle_t TempSensor_M1;
@@ -38,6 +39,8 @@ extern RegConv_t VbusRegConv_M1;
 extern RDivider_Handle_t BusVoltageSensor_M1;
 extern PWMC_Handle_t *pwmcHandle[NBR_OF_MOTORS];
 extern NTC_Handle_t *pTemperatureSensor[NBR_OF_MOTORS];
+extern SpeedPotentiometer_Handle_t SpeedPotentiometer_M1;
+extern RegConv_t PotRegConv_M1;
 
 /* USER CODE BEGIN Additional extern */
 

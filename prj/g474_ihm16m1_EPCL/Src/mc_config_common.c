@@ -106,6 +106,34 @@ RDivider_Handle_t BusVoltageSensor_M1 =
   .aBuffer                    = RealBusVoltageSensorFilterBufferM1,
 };
 
+/** @brief */
+uint16_t SpeedPotentiometer_ValuesBuffer_M1[ 1 << POTENTIOMETER_LPF_BANDWIDTH_POW2_M1 ];
+
+/*
+ * Speed Potentiometer instance for motor 1
+ */
+RegConv_t PotRegConv_M1 =
+{
+  .regADC              = ADC1,
+  .channel             = MC_ADC_CHANNEL_8,
+  .samplingTime        = POTENTIOMETER_ADC_SAMPLING_TIME_M1,
+};
+
+SpeedPotentiometer_Handle_t SpeedPotentiometer_M1 =
+{
+  .Pot =
+  {
+    .LPFilterBandwidthPOW2 = POTENTIOMETER_LPF_BANDWIDTH_POW2_M1,
+    .PotMeasArray          = (uint16_t *)SpeedPotentiometer_ValuesBuffer_M1
+  },
+
+  .pMCI                    = & Mci[0],
+  .RampSlope               = (uint32_t)(POTENTIOMETER_RAMP_SLOPE_M1),
+  .ConversionFactor        = (uint16_t)((65536.0) / ((POTENTIOMETER_MAX_SPEED_M1) - (POTENTIOMETER_MIN_SPEED_M1))),
+  .SpeedAdjustmentRange    = (uint16_t)(POTENTIOMETER_SPEED_ADJUSTMENT_RANGE_M1),
+  .MinimumSpeed            = (uint16_t)(POTENTIOMETER_MIN_SPEED_M1),
+};
+
 PWMC_Handle_t *pwmcHandle[NBR_OF_MOTORS];
 
 /* USER CODE BEGIN Additional configuration */

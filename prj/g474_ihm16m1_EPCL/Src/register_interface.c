@@ -27,6 +27,7 @@
 #include "mcp.h"
 #include "mcp_config.h"
 #include "mcpa.h"
+#include "dac_ui.h"
 #include "mc_configuration_registers.h"
 
 uint8_t RI_SetRegisterGlobal(uint16_t regID, uint8_t typeID, uint8_t *data, uint16_t *size, int16_t dataAvailable)
@@ -56,6 +57,7 @@ uint8_t RI_SetRegisterGlobal(uint16_t regID, uint8_t typeID, uint8_t *data, uint
 
     case TYPE_DATA_16BIT:
     {
+      uint16_t regdata16 = *(uint16_t *)data; //cstat !MISRAC2012-Rule-11.3
       switch (regID)
       {
 
@@ -64,6 +66,18 @@ uint8_t RI_SetRegisterGlobal(uint16_t regID, uint8_t typeID, uint8_t *data, uint
         case MC_REG_MOTOR_POWER:
         {
           retVal = MCP_ERROR_RO_REG;
+          break;
+        }
+
+        case MC_REG_DAC_OUT1:
+        {
+          DAC_SetChannelConfig(&DAC_Handle , DAC_CH1, regdata16);
+          break;
+        }
+
+        case MC_REG_DAC_OUT2:
+        {
+          DAC_SetChannelConfig(&DAC_Handle , DAC_CH2, regdata16);
           break;
         }
 
@@ -639,10 +653,22 @@ uint8_t RI_GetRegisterGlobal(uint16_t regID,uint8_t typeID,uint8_t * data,uint16
 
       case TYPE_DATA_16BIT:
       {
+       int16_t *regdata16 = (int16_t *) data; //cstat !MISRAC2012-Rule-11.3
         if (freeSpace >= 2)
         {
           switch (regID)
           {
+            case MC_REG_DAC_OUT1:
+            {
+              *regdata16 = (int16_t)DAC_GetChannelConfig(&DAC_Handle , DAC_CH1);
+              break;
+            }
+
+            case MC_REG_DAC_OUT2:
+            {
+              *regdata16 = (int16_t)DAC_GetChannelConfig(&DAC_Handle , DAC_CH2);
+              break;
+            }
             case MC_REG_DAC_USER1:
             case MC_REG_DAC_USER2:
               break;

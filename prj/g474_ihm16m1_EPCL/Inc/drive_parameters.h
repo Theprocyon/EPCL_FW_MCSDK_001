@@ -193,6 +193,60 @@
 
 /******************************   ADDITIONAL FEATURES   **********************/
 
+/* **** Potentiometer parameters **** */
+/** @brief Sampling time set to the ADC channel used by the potentiometer component */
+#define POTENTIOMETER_ADC_SAMPLING_TIME_M1  LL_ADC_SAMPLING_CYCLE(47)
+
+/**
+ * @brief Speed reference set to Motor 1 when the potentiometer is at its maximum
+ *
+ * This value is expressed in #SPEED_UNIT.
+ *
+ * Default value is #MAX_APPLICATION_SPEED_UNIT.
+ *
+ * @sa POTENTIOMETER_MIN_SPEED_M1
+ */
+#define POTENTIOMETER_MAX_SPEED_M1          MAX_APPLICATION_SPEED_UNIT
+
+/**
+ * @brief Speed reference set to Motor 1 when the potentiometer is at its minimum
+ *
+ * This value is expressed in #SPEED_UNIT.
+ *
+ * Default value is 10 % of #MAX_APPLICATION_SPEED_UNIT.
+ *
+ * @sa POTENTIOMETER_MAX_SPEED_M1
+ */
+#define POTENTIOMETER_MIN_SPEED_M1          ((MAX_APPLICATION_SPEED_UNIT)/10)
+
+/**
+ * @brief Potentiometer change threshold to trigger speed reference update for Motor 1
+ *
+ * When the potentiometer value differs from the current speed reference by more than this
+ * threshold, the speed reference set to the motor is adjusted to match the potentiometer value.
+ *
+ * The threshold is expressed in u16digits. Its default value is set to 13% of the potentiometer
+ * aquisition range
+ *
+ */
+ #define POTENTIOMETER_SPEED_ADJUSTMENT_RANGE_M1 (655)
+
+/**
+ * @brief Acceleration used to compute ramp duration when setting speed reference to Motor 1
+ *
+ * This acceleration is expressed in #SPEED_UNIT/s. Its default value is 100 Hz/s (provided
+ * that #SPEED_UNIT is #U_01HZ).
+ *
+ */
+ #define POTENTIOMETER_RAMP_SLOPE_M1        1000
+
+/**
+ * @brief Bandwith of the low pass filter applied on the potentiometer values
+ *
+ * @see SpeedPotentiometer_Handle_t::LPFilterBandwidthPOW2
+ */
+#define POTENTIOMETER_LPF_BANDWIDTH_POW2_M1 4
+
 /*** On the fly start-up ***/
 
 /**************************

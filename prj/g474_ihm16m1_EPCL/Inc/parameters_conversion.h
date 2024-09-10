@@ -158,8 +158,8 @@
                                             (RSHUNT * AMPLIFICATION_GAIN)) / 65536.0f)
 
 /****** Prepares the UI configurations according the MCconfxx settings ********/
-#define DAC_ENABLE
-#define DAC_OP_ENABLE
+#define DAC_ENABLE | OPT_DAC
+#define DAC_OP_ENABLE | UI_CFGOPT_DAC
 
 /* Motor 1 settings */
 #define FW_ENABLE

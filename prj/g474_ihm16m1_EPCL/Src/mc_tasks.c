@@ -33,6 +33,7 @@
 #include "mc_tasks.h"
 #include "parameters_conversion.h"
 #include "mcp_config.h"
+#include "dac_ui.h"
 #include "mc_app_hooks.h"
 
 /* USER CODE BEGIN Includes */
@@ -134,6 +135,8 @@ __weak void MCboot( MCI_Handle_t* pMCIList[NBR_OF_MOTORS] )
     NTC_Init(&TempSensor_M1);
 
     pMCIList[M1] = &Mci[M1];
+
+    DAC_Init(&DAC_Handle);
 
     /* Applicative hook in MCBoot() */
     MC_APP_BootHook();
@@ -320,6 +323,7 @@ __weak uint8_t TSK_HighFrequencyTask(void)
 
   /* USER CODE END HighFrequencyTask 0 */
   FOC_HighFrequencyTask(bMotorNbr);
+  DAC_Exec(&DAC_Handle);
 
   /* USER CODE BEGIN HighFrequencyTask 1 */
 
@@ -476,6 +480,7 @@ LL_GPIO_LockPin(M1_PWM_WH_GPIO_Port, M1_PWM_WH_Pin);
 LL_GPIO_LockPin(M1_PWM_EN_V_GPIO_Port, M1_PWM_EN_V_Pin);
 LL_GPIO_LockPin(M1_PWM_EN_U_GPIO_Port, M1_PWM_EN_U_Pin);
 LL_GPIO_LockPin(M1_PWM_EN_W_GPIO_Port, M1_PWM_EN_W_Pin);
+LL_GPIO_LockPin(M1_POTENTIOMETER_GPIO_Port, M1_POTENTIOMETER_Pin);
 LL_GPIO_LockPin(M1_CURR_AMPL_U_GPIO_Port, M1_CURR_AMPL_U_Pin);
 LL_GPIO_LockPin(M1_BUS_VOLTAGE_GPIO_Port, M1_BUS_VOLTAGE_Pin);
 LL_GPIO_LockPin(M1_CURR_AMPL_V_GPIO_Port, M1_CURR_AMPL_V_Pin);
