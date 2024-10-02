@@ -54,7 +54,7 @@ DMA_HandleTypeDef hdma_usart2_rx;
 DMA_HandleTypeDef hdma_usart2_tx;
 
 /* USER CODE BEGIN PV */
-
+DACXX65_t dac;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -67,14 +67,22 @@ static void MX_CORDIC_Init(void);
 static void MX_DAC1_Init(void);
 static void MX_TIM1_Init(void);
 static void MX_USART2_UART_Init(void);
+static void MX_SPI1_Init(void);
 static void MX_NVIC_Init(void);
 /* USER CODE BEGIN PFP */
+
+void EPCL_SPI_Tx24bit(uint32_t);
+void EPCL_SPI_STEEnable(bool);
+
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+int _write(int file, char* p, int len){
+	HAL_UART_Transmit(&huart2, p, len, 10);
+	return len;
+}
 /* USER CODE END 0 */
 
 /**
@@ -94,7 +102,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
+  DACXX65_Init(&dac, DACXX65_16BIT, EPCL_SPI_Tx24bit, EPCL_SPI_STEEnable);
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -114,17 +122,42 @@ int main(void)
   MX_TIM1_Init();
   MX_USART2_UART_Init();
   MX_MotorControl_Init();
+  MX_SPI1_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
+  LL_SPI_Enable(SPI1);
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
   while (1)
   {
+	  static uint16_t dataA = 0;
+	  static uint16_t dataB = 0;
+	  static uint16_t dataC = 0;
+	  static uint16_t dataD = 0;
+
+	  HAL_Delay(1);
+
+	  dataA = (uint16_t)50 * HAL_GetTick();
+	  dataB = (uint16_t)50 * HAL_GetTick()+ 10000;
+	  dataC = (uint16_t)50 * HAL_GetTick()+ 20000;
+	  dataD = (uint16_t)50 * HAL_GetTick()+ 30000;
+
+	  DACXX65_WriteChannel(&dac, DACXX65_CHANNEL_A, dataA);
+
+	  DACXX65_WriteChannel(&dac, DACXX65_CHANNEL_B, dataB);
+
+	  DACXX65_WriteChannel(&dac, DACXX65_CHANNEL_C, dataC);
+
+	  DACXX65_WriteChannel(&dac, DACXX65_CHANNEL_D, dataD);
+
+	  printf("A : %5d, B : %5d, C : %5d, D : %5d \r\n",dataA,dataB,dataC,dataD);
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -485,6 +518,69 @@ static void MX_DAC1_Init(void)
 }
 
 /**
+  * @brief SPI1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_SPI1_Init(void)
+{
+
+  /* USER CODE BEGIN SPI1_Init 0 */
+
+  /* USER CODE END SPI1_Init 0 */
+
+  LL_SPI_InitTypeDef SPI_InitStruct = {0};
+
+  LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+  /* Peripheral clock enable */
+  LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SPI1);
+
+  LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOB);
+  /**SPI1 GPIO Configuration
+  PB3   ------> SPI1_SCK
+  PB5   ------> SPI1_MOSI
+  */
+  GPIO_InitStruct.Pin = LL_GPIO_PIN_3;
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+  GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+  GPIO_InitStruct.Alternate = LL_GPIO_AF_5;
+  LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  GPIO_InitStruct.Pin = LL_GPIO_PIN_5;
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+  GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+  GPIO_InitStruct.Alternate = LL_GPIO_AF_5;
+  LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /* USER CODE BEGIN SPI1_Init 1 */
+
+  /* USER CODE END SPI1_Init 1 */
+  /* SPI1 parameter configuration*/
+  SPI_InitStruct.TransferDirection = LL_SPI_FULL_DUPLEX;
+  SPI_InitStruct.Mode = LL_SPI_MODE_MASTER;
+  SPI_InitStruct.DataWidth = LL_SPI_DATAWIDTH_8BIT;
+  SPI_InitStruct.ClockPolarity = LL_SPI_POLARITY_LOW;
+  SPI_InitStruct.ClockPhase = LL_SPI_PHASE_2EDGE;
+  SPI_InitStruct.NSS = LL_SPI_NSS_SOFT;
+  SPI_InitStruct.BaudRate = LL_SPI_BAUDRATEPRESCALER_DIV128;
+  SPI_InitStruct.BitOrder = LL_SPI_MSB_FIRST;
+  SPI_InitStruct.CRCCalculation = LL_SPI_CRCCALCULATION_DISABLE;
+  SPI_InitStruct.CRCPoly = 7;
+  LL_SPI_Init(SPI1, &SPI_InitStruct);
+  LL_SPI_SetStandard(SPI1, LL_SPI_PROTOCOL_MOTOROLA);
+  LL_SPI_DisableNSSPulseMgt(SPI1);
+  /* USER CODE BEGIN SPI1_Init 2 */
+
+  /* USER CODE END SPI1_Init 2 */
+
+}
+
+/**
   * @brief TIM1 Initialization Function
   * @param None
   * @retval None
@@ -658,6 +754,9 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, M1_PWM_EN_U_Pin|M1_PWM_EN_V_Pin|M1_PWM_EN_W_Pin, GPIO_PIN_RESET);
 
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(SPI1_STE_GPIO_Port, SPI1_STE_Pin, GPIO_PIN_RESET);
+
   /*Configure GPIO pin : Start_Stop_Pin */
   GPIO_InitStruct.Pin = Start_Stop_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
@@ -671,11 +770,34 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
+  /*Configure GPIO pin : SPI1_STE_Pin */
+  GPIO_InitStruct.Pin = SPI1_STE_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(SPI1_STE_GPIO_Port, &GPIO_InitStruct);
+
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
+
+void EPCL_SPI_Tx24bit(uint32_t data)
+{
+
+	LL_SPI_TransmitData8(SPI1, ((data >> 16)&(0xFF)));
+	LL_SPI_TransmitData8(SPI1, ((data >> 8 )&(0xFF)));
+	LL_SPI_TransmitData8(SPI1, ((data >> 0 )&(0xFF)));
+
+	while(LL_SPI_IsActiveFlag_BSY(SPI1));
+}
+
+void EPCL_SPI_STEEnable(bool en)
+{
+	HAL_GPIO_WritePin(SPI1_STE_GPIO_Port, SPI1_STE_Pin, !(en));
+}
+
 
 /* USER CODE END 4 */
 
