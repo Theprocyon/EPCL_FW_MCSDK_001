@@ -300,6 +300,13 @@ void MCP_ReceivedPacket(MCP_Handle_t *pHandle)
         break;
       }
 
+      case SW_RESET:
+      {
+        HAL_NVIC_SystemReset();
+        MCPResponse = MCP_CMD_OK;
+        break;
+      }
+
       case STOP_RAMP:
       {
         if (RUN == MCI_GetSTMState(pMCI))

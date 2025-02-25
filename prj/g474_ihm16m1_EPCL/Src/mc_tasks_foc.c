@@ -1,7 +1,7 @@
 
 /**
   ******************************************************************************
-  * @file    mc_tasks.c
+  * @file    mc_tasks_foc.c
   * @author  Motor Control SDK Team, ST Microelectronics
   * @brief   This file implements tasks definition
   *

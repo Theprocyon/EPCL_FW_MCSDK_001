@@ -301,11 +301,11 @@ __weak Trig_Components MCM_Trig_Functions(int16_t hAngle)
   /* MISRAC2012-violation Rule 19.2. The union keyword should not be used.
    * If this rule is not followed, the kinds of behavior that need to be determined
    * are:
-   * Padding ?? how much padding is inserted at the end of the union;
-   * Alignment ?? how are members of any structures within the union aligned;
-   * Endianness ?? is the most significant byte of a word stored at the lowest or
+   * Padding â€” how much padding is inserted at the end of the union;
+   * Alignment â€” how are members of any structures within the union aligned;
+   * Endianness â€” is the most significant byte of a word stored at the lowest or
    *              highest memory address;
-   * Bit-order ?? how are bits numbered within bytes and how are bits allocated to
+   * Bit-order â€” how are bits numbered within bytes and how are bits allocated to
    *             bit fields.
    * Low. Use of union (u32toi16x2). */
   //cstat -MISRAC2012-Rule-19.2
@@ -315,14 +315,14 @@ __weak Trig_Components MCM_Trig_Functions(int16_t hAngle)
   } CosSin;
   //cstat +MISRAC2012-Rule-19.2
   /* Configure CORDIC */
-  /* Misra  violation Rule 11.4 Aï¿½Conversionï¿½shouldï¿½notï¿½beï¿½performedï¿½betweenï¿½aï¿?
+  /* Misra  violation Rule 11.4 Aï¿½Conversionï¿½shouldï¿½notï¿½beï¿½performedï¿½betweenï¿½aï¿½
    * pointerï¿½toï¿½object and an integer type */
   WRITE_REG(CORDIC->CSR, CORDIC_CONFIG_COSINE);
-  /* Misra  violation Ruleï¿?11.4 Aï¿½Conversionï¿½shouldï¿½notï¿½beï¿½performedï¿½betweenï¿½a
+  /* Misra  violation Ruleï¿½11.4 Aï¿½Conversionï¿½shouldï¿½notï¿½beï¿½performedï¿½betweenï¿½a
    * pointerï¿½toï¿½object and an integer type */
   LL_CORDIC_WriteData(CORDIC, ((uint32_t)0x7FFF0000) + ((uint32_t)hAngle));
   /* Read angle */
-  /* Misra  violation Ruleï¿?11.4 Aï¿½Conversionï¿½shouldï¿½notï¿½beï¿½performed betweenï¿½a
+  /* Misra  violation Ruleï¿½11.4 Aï¿½Conversionï¿½shouldï¿½notï¿½beï¿½performed betweenï¿½a
    * pointerï¿½to object and an integer type */
   CosSin.CordicRdata = LL_CORDIC_ReadData(CORDIC);
   return (CosSin.Components); //cstat !UNION-type-punning

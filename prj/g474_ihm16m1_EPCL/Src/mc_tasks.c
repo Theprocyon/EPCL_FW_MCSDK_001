@@ -105,6 +105,7 @@ __weak void MCboot( MCI_Handle_t* pMCIList[NBR_OF_MOTORS] )
     /*************************************************/
     /*    FOC initialization         */
     /*************************************************/
+    pMCIList[M1] = &Mci[M1];
     FOC_Init();
 
     ASPEP_start(&aspepOverUartA);
@@ -133,8 +134,6 @@ __weak void MCboot( MCI_Handle_t* pMCIList[NBR_OF_MOTORS] )
     /*******************************************************/
     (void)RCM_RegisterRegConv(&TempRegConv_M1);
     NTC_Init(&TempSensor_M1);
-
-    pMCIList[M1] = &Mci[M1];
 
     DAC_Init(&DAC_Handle);
 
@@ -319,6 +318,7 @@ __weak uint8_t TSK_HighFrequencyTask(void)
 {
   uint8_t bMotorNbr;
   bMotorNbr = 0;
+
   /* USER CODE BEGIN HighFrequencyTask 0 */
 
   /* USER CODE END HighFrequencyTask 0 */

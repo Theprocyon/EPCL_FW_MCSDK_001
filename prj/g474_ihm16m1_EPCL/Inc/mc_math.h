@@ -301,7 +301,7 @@ static inline int16_t MCM_Modulus(int16_t alpha, int16_t beta)
   __disable_irq();
   /* Configure and call to CORDIC- */
   WRITE_REG(CORDIC->CSR,CORDIC_CONFIG_MODULUS);
-  LL_CORDIC_WriteData(CORDIC, (((uint32_t)beta << 16U) | (uint32_t)alpha));
+  LL_CORDIC_WriteData(CORDIC, (((uint32_t)beta << 16U) | (((uint32_t)alpha) & 0x0000FFFFU)));
   /* Wait for result */
   while(LL_CORDIC_IsActiveFlag_RRDY(CORDIC) == 0U)
   {

@@ -1008,7 +1008,7 @@ __weak int16_t MCI_GetLastRampFinalTorque(MCI_Handle_t *pHandle) //cstat !MISRAC
 __weak float_t MCI_GetLastRampFinalTorque_F(MCI_Handle_t *pHandle) //cstat !MISRAC2012-Rule-8.13
 {
 #ifdef NULL_PTR_CHECK_MC_INT
-  int16_t retVal = 0;
+  float_t retVal = 0;
 
   if (MC_NULL == pHandle)
   {
